@@ -11,8 +11,11 @@ interface Ranking {
 function App() {
   const [count, setCount] = useState(0);
   const [ranking, setRanking] = useState<Ranking[]>([]);
-  const [showRanking, setShowRanking] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchRanking();
+  }, []);
 
   const increment = () => setCount((prev) => prev + 1);
   const reset = () => setCount(0);
@@ -43,25 +46,19 @@ function App() {
         alert('Erro ao salvar o contador. Verifique sua conexão e configurações do Supabase.');
       } else {
         await fetchRanking();
-        setShowRanking(true);
         setCount(0);
       }
       setLoading(false);
     } else {
       await fetchRanking();
-      setShowRanking(true);
     }
-  };
-
-  const backToCounter = () => {
-    setShowRanking(false);
   };
 
   return (
     <div className="app-container">
       <h1 className="title">Contador de tá</h1>
       
-      {!showRanking ? (
+      <div className="main-content">
         <div className="counter-section">
           <div className="counter-display">
             <span className="count-number">{count}</span>
@@ -78,7 +75,7 @@ function App() {
             </button>
           </div>
         </div>
-      ) : (
+
         <div className="ranking-section">
           <h2>Top 5 Recordes</h2>
           <ul className="ranking-list">
@@ -96,11 +93,8 @@ function App() {
               <p>Nenhum recorde encontrado.</p>
             )}
           </ul>
-          <button className="btn btn-back" onClick={backToCounter}>
-            Voltar
-          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
