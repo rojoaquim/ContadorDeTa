@@ -65,7 +65,7 @@ function App() {
           </div>
           <div className="button-group">
             <button className="btn btn-increment" onClick={increment} disabled={loading}>
-              Incrementar
+              + 1 tá
             </button>
             <button className="btn btn-reset" onClick={reset} disabled={loading}>
               Resetar
